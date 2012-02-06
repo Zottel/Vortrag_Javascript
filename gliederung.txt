@@ -1,0 +1,58 @@
+- Geschichte
+	- Netscape (warum JAVAscript?)
+	- Microsoft kopieren von Fehlern
+	- W3C
+	- ECMAScript
+	- DOM
+
+- DatenTypen
+	- Strings
+	- Objekte
+	- Arrays
+	- Null
+	- undefined
+	- Zahlen, NaN
+
+- Syntax
+	- Funktionen
+	- Variablen
+	- forin forEach
+
+- Closures
+
+- Prototyping
+	- new()
+	- .prototype
+	- .__proto__
+
+- Bad Parts?
+	- Cross-Browser foo
+	- Asynchrone Schachtelung -> HILFE?
+	- PHP: Vergleiche == vs. ===
+	- Globale Variablen (siehe lua)
+	- Semicolon Insertion
+
+- this Referenz + $.proxy()
+
+- JQuery
+	- JQuery Templates
+	- JQuery UI
+	- JQuery Fileupload
+
+- Alternative Frameworks:
+	- Kleine Frameworks:
+		- http://microjs.com/
+	- Prototype: http://www.prototypejs.org/
+
+- Node.js
+	- V8
+	- async api
+
+Quellen:
+	http://de.selfhtml.org/javascript/intro.htm
+	http://matthiasschuetz.com/
+	Google Tech Talk: "Javascript: The Good Parts"
+	(http://www.youtube.com/watch?v=hQVTIJBZook)
+	http://inimino.org/~inimino/blog/javascript_semicolons
+	ChaosRadio Node.js
+
