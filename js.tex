@@ -6,11 +6,24 @@
 \usepackage{listings}
 \usepackage[]{hyperref}
 
-% Ich bezweifle dass diese "Sprachedefinition" auch nur ansatzweise korrekt ist, aber für meine Zwecke reicht es
-\lstdefinelanguage{Lua}{morekeywords={function,end,local,return,while,do,for,in},morekeywords={[2]table.insert},morecomment[1]{--},morestring=[b]’,morestring=[b]"}
+% From: http://lenaherrmann.net/2010/05/20/javascript-syntax-highlighting-in-the-latex-listings-package
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
 
 % Ein minimalistisches Layout
-\lstset{language=Lua,basicstyle=\small,stringstyle=\ttfamily,keywordstyle={[2]\small}}
+\lstset{language=Javascript,basicstyle=\small,stringstyle=\ttfamily,keywordstyle={[2]\small}}
 
 % Farb- und sonstige Gestaltung der Folien
 \usetheme{Dresden}
@@ -64,8 +77,8 @@
 				\item undefined
 				\item Zahlen
 					\begin{itemize}
-						\item (NEGATIVE|POSITIVE)_INFINITY
-						\item (MIN|MAX)_VALUE
+						\item $(NEGATIVE|POSITIVE)\_INFINITY$
+						\item $(MIN|MAX)\_VALUE$
 						\item NaN
 					\end{itemize}
 			\end{itemize}
@@ -74,33 +87,44 @@
 		\begin{frame}[fragile,shrink=5]{Syntax}
 			\begin{itemize}
 				\item Funktionen
+				\begin{lstlisting}
+					> function f(x) { return x + 1; }
+				\end{lstlisting}
 				\item Variablen
-				\item For(<var index> in <array>){}
-				\item Array.forEach(f)
+				\begin{lstlisting}
+					> var f = function(x) { return x + 2; };
+				\end{lstlisting}
+				\item \textbf{foreach}
+					\begin{lstlisting}
+						> for(var i = 0; i < array.length; i++)
+					\end{lstlisting}
+					\begin{lstlisting}
+						> for(<var index> in <array>){}
+					\end{lstlisting}
+					\begin{lstlisting}
+						> Array.forEach(f)
+					\end{lstlisting}
 			\end{itemize}
 		\end{frame}
 		
-		\begin{frame}[fragile,shrink=5]{Tables}
-			Lua Programme werden hauptsächlich durch Tables organisiert.
-			Tables lassen sich wie Hashtables und Arrays nutzen.
-			Metatables (und Metamethoden) bestimmen Verhalten von LUA
-			\begin{lstlisting}[title={\_G}]
-				> print(_G.print)
-				function: 0x9402020
-			\end{lstlisting}
-
-			\begin{lstlisting}[title={\_\_index}]
-				> A = {a = 1, b = 2}
-				> B = {b = 3}
-				> setmetatable(B, {__index = A})
-				> print(B.a)
-				1
-				> print(B.b)
-				3
+		\begin{frame}[fragile,shrink=5]{Closures}
+			\begin{lstlisting}
+				> function a(x) {
+				>   return function() {
+				>     return x++;
+				>   }
+				> }
+				> x = a(100)
+				> x()
+				100
+				> x()
+				101
+				> x()
+				102
 			\end{lstlisting}
 		\end{frame}
 		
-		\begin{frame}[fragile,shrink=5]{Funktionen}
+		\begin{frame}[fragile,shrink=5]{Prototyping}
 			\lstset{numbers=none}
 			\begin{lstlisting}[title={Schreibweise}]
 				function <Name>(<Parameter>) ... end
@@ -372,13 +396,13 @@
 
 		\begin{frame}{Quellen}
 			\begin{itemize}
-				\item \#lua auf Freenode
-				\item LUA-Users Wiki
-				\item LUA Reference Manual
-				\item Projektseite von Copas
-				\item Wikipedia
-				\item RFC 1459 (Internet Relay Chat Protocol)
-				\item Julius Kopf
+				\item \url{http://de.selfhtml.org/javascript/intro.htm}
+				\item \url{http://matthiasschuetz.com/}
+				\item Google Tech Talk: "Javascript: The Good Parts"
+					(\url{http://www.youtube.com/watch?v=hQVTIJBZook})
+				\item \url{http://inimino.org/~inimino/blog/javascript_semicolons}
+				\item ChaosRadio Expres: Node.js
+				\item \url{http://shichuan.github.com/javascript-patterns/}
 			\end{itemize}
 		\end{frame}
 		

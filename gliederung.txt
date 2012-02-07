@@ -52,7 +52,7 @@ Quellen:
 	http://de.selfhtml.org/javascript/intro.htm
 	http://matthiasschuetz.com/
 	Google Tech Talk: "Javascript: The Good Parts"
-	(http://www.youtube.com/watch?v=hQVTIJBZook)
+		(http://www.youtube.com/watch?v=hQVTIJBZook)
 	http://inimino.org/~inimino/blog/javascript_semicolons
 	ChaosRadio Node.js
-
+	http://shichuan.github.com/javascript-patterns/
