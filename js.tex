@@ -41,10 +41,10 @@
 % Joa, was so an Informationen zu einer Präsentation gehört
 \author{Julius Roob}
 \title{Javascript}
-\subtitle{Lua lernen \checked\\Entwickeln üben \checked\\IRC Bot haben \checked}
+\subtitle{}
 \keywords{Javascript, JQuery}
 \institute{Chaos inKL.}
-\date{}
+\date{7. Februar 2012}
 
 \begin{document}
 	\section{Einleitung}
@@ -68,6 +68,7 @@
 			\end{itemize}
 		\end{frame}
 
+	\section{Sprache}
 		\begin{frame}{Datentypen}{}
 			\begin{itemize}
 				\item Strings
@@ -99,7 +100,7 @@
 						> for(var i = 0; i < array.length; i++)
 					\end{lstlisting}
 					\begin{lstlisting}
-						> for(<var index> in <array>){}
+						> for(var index in array){}
 					\end{lstlisting}
 					\begin{lstlisting}
 						> Array.forEach(f)
@@ -124,287 +125,167 @@
 			\end{lstlisting}
 		\end{frame}
 		
-		\begin{frame}[fragile,shrink=5]{Prototyping}
-			\lstset{numbers=none}
-			\begin{lstlisting}[title={Schreibweise}]
-				function <Name>(<Parameter>) ... end
-				-- ist das gleiche wie:
-				<Name> = function(<Parameter>) ... end
-			\end{lstlisting}
-
-			\begin{lstlisting}[title={Mehrere Rückgabewerte}]
-				local a, b, c = unpack({"hallo", "welt", "!"})
-
-				print(a, b, unpack({"!", "wie geht es dir?"}))
-			\end{lstlisting}
-			
+		\begin{frame}[fragile,shrink=5]{Exceptions}
 			\begin{columns}
 				\column{.50\textwidth}
-					\begin{lstlisting}[title={OOP}]
-						welt:hallo("!")
-						-- ist kurz fuer:
-						welt.hallo(welt, "!")
+					\begin{lstlisting}[title={}]
+						function asd() {
+						  throw "ups";
+						}
 					\end{lstlisting}
 				
 				\column{.50\textwidth}
-					\begin{lstlisting}[title={Proper Tail Calls}]
-						function f (x)
-						  return g(x)
-						end
+					\begin{lstlisting}[title={}]
+						try {
+						  asd();
+						} catch (e) {
+						  if (e === "ups") {
+						    alert("ups!");
+						  }
+						}
 					\end{lstlisting}
 			\end{columns}
 		\end{frame}
 		
-		\begin{frame}[fragile]{Sandboxing}
-			Sehr komfortabel in Lua.
-
-			\begin{description}
-				\item[Scope] \verb+setfenv()+
-				\item[Prozessor] \verb+function e() error("CPU limit reached!") end+ \verb+debug.sethook(e, "", 1000)+
-				\item[Speicher] \verb+setrlimit()+ und \verb+pcall()+
-			\end{description}
-		\end{frame}
-		
-		\begin{frame}[fragile]{OOP}
-			\lstset{numbers=left}
-			Alternative zur bereits beschriebenen OOP: \textit{Closures for Scopes}
-			\begin{lstlisting}
-			function factory()
-			  local self = {kaffee=0}
-			  local interface = {}
-			  function interface.set(n)
-			    self.kaffee = n
-			  end
-			  function interface.get()
-			    return self.kaffee
-			  end
-			  return interface
-			end
+		\begin{frame}[fragile,shrink=5]{Prototyping}{\_\_proto\_\_}
+			\begin{lstlisting}[]
+				> bla = {x: 1, y: 2}
+				> blub = {x: 3}
+				> blub.__proto__ = bla
+				> blub.x
+				3
+				> blub.y
+				2
 			\end{lstlisting}
 		\end{frame}
-
-		\begin{frame}[fragile]{Coroutines}
+		
+		\begin{frame}[fragile,shrink=5]{Prototyping}{new}
 			\begin{columns}
 				\column{.50\textwidth}
-					\begin{lstlisting}
-						function test()
-						  local a = 0
-						  while true do
-						    a = a + 1
-						    coroutine.yield(a)
-						  end
-						end
+					\begin{lstlisting}[]
+						function asd(x) {
+						  this.y = x;
+						}
 					\end{lstlisting}
+				
 				\column{.50\textwidth}
-					\begin{lstlisting}
-						> a = coroutine.create(test)
-						> print(coroutine.resume(a))
-						true	1
-						> print(coroutine.resume(a))
-						true	2
-						> print(coroutine.resume(a))
-						true	3
-						> print(coroutine.resume(a))
-						true	4
-						> print(coroutine.resume(a))
-						true	5
+					\begin{lstlisting}[]
+						> a = new asd(10);
+						> a.y
+						10
 					\end{lstlisting}
 			\end{columns}
 		\end{frame}
-		
-		\begin{frame}[fragile]{Luarocks}
-			\lstset{numbers=none}
-			Einfaches installieren von zusätzlichen Bibliotheken bzw. Paketen.
-			\begin{lstlisting}
-				# luarocks search pcre
-				# luarocks install lrexlib-pcre
-			\end{lstlisting}
-			\vskip15pt
-			Kann von einem Benutzer im Homedir installiert werden.
-			\vskip15pt
-			Skript mit Rocks ausführen:
 
-			\begin{lstlisting}
-				# lua -lluarocks.loader aurora.lua
-			\end{lstlisting}
+		\begin{frame}[fragile,shrink=5]{Prototyping}{.prototype}
+			\begin{columns}
+				\column{.50\textwidth}
+					\begin{lstlisting}[title={}]
+						> asd.prototype = {x: 321}
+					\end{lstlisting}
+				
+				\column{.50\textwidth}
+					\begin{lstlisting}[title={}]
+						> a = new asd(10);
+						> a.x
+						321
+					\end{lstlisting}
+			\end{columns}
 		\end{frame}
-		
-		\begin{frame}[fragile]{JSON}
-			Einfach und schön
 
-			\begin{lstlisting}
-				{
-				  "wasser":{"julius":1},
-				  "africola":{"bnerd":1,"julius":0},
-				  "baileys":{"julius":1},
-				  "cappu":{"lucy":2,"julius":7,"mullej":7},
-				  "mate":{"julius":0},
-				  "kaffee":{"julius":2,"lastofthewolves":1}
-				}
-			\end{lstlisting}
-			\verb+json.encode()+ und \verb+json.decode()+ sind wohl die einfachste Möglichkeit, Tables zu serialisieren.
-		\end{frame}
-		
-		\begin{frame}[fragile,shrink=5]{Copas}{Coroutine Oriented Portable Asynchronous Services for Lua}
-			\lstset{numbers=left}
-
-			\begin{lstlisting}[title={Primitiver Chatserver},firstnumber=3,frame=single]
-				users = {}
-				function handle(client)
-				  copas.send(client, "name? ")
-				  local name = copas.receive(client, "*l")
-				  users[name] = client
-				  while true do
-				    local line = copas.receive(client, "*l")
-				    for _,sock in pairs(users) do
-				      copas.send(sock, name .. ": " .. line .. "\n")
-				    end
-				  end
-				end
-				serv = socket.bind("0.0.0.0", 1025)
-				copas.addserver(serv, handle)
-				copas.loop()
-			\end{lstlisting}
-		\end{frame}
-	
-	
-	\section{IRC}
-		\begin{frame}{IRC}{Inhalt}
+		\begin{frame}[fragile,shrink=5]{Bad Parts}{}
 			\begin{itemize}
-				\item Kurze Beschreibung 
-				\item Nachrichtenformat
-				\item Bleistifte
-				\item CTCP
-			\end{itemize}
-		\end{frame}
-		
-		\begin{frame}{Kurze Beschreibung (aka Wikipedia lite)}
-			\begin{itemize}
-				\item Gibt es als \textbf{Internet} Relay Chat seit 1988.
-				\item Es existiert eine unüberschaubare Anzahl an Clients, Bots und Servern
-				\item Thin Clients
-			\end{itemize}
-		\end{frame}
-		
-		\begin{frame}[fragile,shrink=5]{Nachrichtenformat}
-			Die Kommunikation zwischen Server und Client findet ausschließlich durch max. 510 Byte lange mit einem CRLF getrennte Nachrichten statt.
-			
-			\begin{lstlisting}[language=,breaklines=true,breakatwhitespace=true]
-				NICK julius_
-				USER julius julius irc.hackint.org :Julius
-				:irc.hackint.org NOTICE AUTH :*** No Ident response
-				:irc.hackint.org NOTICE AUTH :*** Couldn't look up your hostname
-				:irc.hackint.org 001 julius :Welcome to the hackint Internet Relay Chat Network julius
-			\end{lstlisting}
-			
-			\begin{lstlisting}[language=,breaklines=true,breakatwhitespace=true]
-				PING LAG2126774742
-				:irc.hackint.org PONG irc.hackint.org :LAG2126774742
-				PRIVMSG julius :blub!
-				:irc.hackint.org 301 julius_ julius :auf nach hause
-			\end{lstlisting}
-			
-			\begin{lstlisting}[language=,breaklines=true,breakatwhitespace=true]
-				:eBrnd!~eBrnd@ein.anderer.server PRIVMSG #c3kl :bitte irgendwas :)
-			\end{lstlisting}
-		\end{frame}
-
-		\begin{frame}[fragile]{Bleistife}
-			\begin{itemize}
-				\item \verb+PRIVMSG <Channel> <Nachricht>+
-				\item \verb+JOIN <Channel>(,<Channel>)*+
-				\item \verb+QUIT <Nachricht>+
-				\item \verb+NICK <Name>+
+				\item Browserkompatibilität
+				\item $==$ vs. $===$
+				\item Globale Variablen
+				\item "`Semicolon Insertion"'
 			\end{itemize}
 		\end{frame}
 
-		\begin{frame}[fragile,shrink=5]{CTCP}{Client-To-Client Protocol}
-			\begin{lstlisting}[language=,breaklines=true,breakatwhitespace=true,title={Format}]
-				"\001<Befehl> <Parameter>\001"
-			\end{lstlisting}
-
-			\begin{lstlisting}[language=,breaklines=true,breakatwhitespace=true,title={Beispiele}]
-				\001ACTION demonstriert mal eben CTCP Action\001
-				-> 10:10  *julius demonstriert mal eben CTCP ACTION
-
-				\001VERSION\001
-				-> 10:16 [freenode] CTCP VERSION reply from julius: irssi v0.8.12
-
-				\001DCC SEND chess.lua 2213957892 48042 1682\001
-			\end{lstlisting}
-		\end{frame}
-	
-	\section{Aurora}
-		\begin{frame}{Aurora}{Inhalt}
+	\section{Frameworks}
+		\begin{frame}[fragile,shrink=5]{JQuery}{}
 			\begin{itemize}
-				\item Motivation
-				\item Architektur
-				\item Module
-				\item Probleme
-			\end{itemize}
-		\end{frame}
-
-		\begin{frame}{Motivation}
-			Warum einen eigenen IRC Bot schreiben?
-
-			\begin{itemize}
-				\item Sprache Lua lernen
-				\item Eventbasierende Socket IO verinnerlichen
-				\item IRC Bots sind immer praktisch
-				\pause
-				\item Spaß
-			\end{itemize}
-		\end{frame}
-
-		\begin{frame}{Architektur}
-			Uh - ja...
-			\begin{itemize}
-				\item Module
-				\item ???
-				\item IRC Netzwerke
-			\end{itemize}
-		\end{frame}
-
-		\begin{frame}{Module}
-			\begin{itemize}
-				\item Konstruktor
-				\item Destruktor
-				\item Step
-				\item Handler
+				\item CSS Selektoren:
+					\begin{lstlisting}
+						$('#form1').submit();
+					\end{lstlisting}
+				\item onLoad:
+					\begin{lstlisting}
+						$(function(){...});
+					\end{lstlisting}
+				\item Objektwrapper
+				\item Erweiterungen
 					\begin{itemize}
-						\item DISCONNECT
-						\item CONNECT
-						\item PRIVMSG
-						\item ... (siehe RFC :)
+						\item JQuery Templates
+						\item JQuery UI
+						\item JQuery Fileupload
 					\end{itemize}
 			\end{itemize}
 		\end{frame}
+
+		\begin{frame}[fragile,shrink=5]{this}{}
+			\begin{lstlisting}[title={Fail}]
+				this.dataPosted = function(data) {
+				  this.data = data;
+				}
+				$.post('ajax/test.html', this.dataPosted);
+			\end{lstlisting}
 		
-		\begin{frame}{Probleme}
+			\begin{lstlisting}[title={Success}]
+				$.post('ajax/test.html', $.proxy(this.dataPosted, this));
+			\end{lstlisting}
+		\end{frame}
+
+		\begin{frame}[fragile,shrink=5]{alternative Frameworks}{}
 			\begin{itemize}
-				\item Module organisieren?
-				\item Zwischen Modulen und Netzwerken herrscht Anarchie
-				\item Authentifizierung im IRC ist unschön
+				\item MicroJS
+
+					Schicke kleine Frameworks
+
+					\url{http://microjs.com/}
+
+				\item Prototype
+
+					\url{http://www.prototypejs.org/}
 			\end{itemize}
 		\end{frame}
 
-		\begin{frame}{Fragen?}{Vorschläge, Anregungen...}
-			\url{http://www.github.com/Zottel/Aurora}
+	\section{Node.js}
+		\begin{frame}[fragile, shrink=5]{Node.js}
+			\begin{itemize}
+				\item V8
+				\item async IO
+			\end{itemize}
+		\end{frame}
+		\begin{frame}[fragile, shrink=5]{Node.js}{Beispiel}
+			\begin{lstlisting}
+				var http = require('http');
 
-			\textbf{:-)}
+				http.createServer(function (req, res) {
+
+				  res.writeHead(200, {'Content-Type': 'text/plain'});
+				  res.end('Hello World\n');
+
+				}).listen(1337, "127.0.0.1");
+
+				console.log('Server running at http://127.0.0.1:1337/');
+			\end{lstlisting}
 		\end{frame}
 
-		\begin{frame}{Quellen}
+	\section*{Quellen}
+		\begin{frame}[fragile, shrink=5]{Quellen}
 			\begin{itemize}
 				\item \url{http://de.selfhtml.org/javascript/intro.htm}
 				\item \url{http://matthiasschuetz.com/}
-				\item Google Tech Talk: "Javascript: The Good Parts"
+				\item Google Tech Talk: "`Javascript: The Good Parts"'\\
 					(\url{http://www.youtube.com/watch?v=hQVTIJBZook})
 				\item \url{http://inimino.org/~inimino/blog/javascript_semicolons}
 				\item ChaosRadio Expres: Node.js
 				\item \url{http://shichuan.github.com/javascript-patterns/}
+				\item \url{http://www.w3schools.com/js/}
+				\item \url{http://api.jquery.com}
+				\item \url{http://nodejs.org/}
 			\end{itemize}
 		\end{frame}
 		
 \end{document}
-

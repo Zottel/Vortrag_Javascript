@@ -20,6 +20,8 @@
 
 - Closures
 
+- Exceptions
+
 - Prototyping
 	- new()
 	- .prototype
@@ -32,12 +34,12 @@
 	- Globale Variablen (siehe lua)
 	- Semicolon Insertion
 
-- this Referenz + $.proxy()
-
 - JQuery
 	- JQuery Templates
 	- JQuery UI
 	- JQuery Fileupload
+
+- this Referenz + $.proxy()
 
 - Alternative Frameworks:
 	- Kleine Frameworks:
@@ -56,3 +58,4 @@ Quellen:
 	http://inimino.org/~inimino/blog/javascript_semicolons
 	ChaosRadio Node.js
 	http://shichuan.github.com/javascript-patterns/
+	http://www.w3schools.com/js/
